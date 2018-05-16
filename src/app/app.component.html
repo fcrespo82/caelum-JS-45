@@ -1,5 +1,7 @@
-<h1 class="text-center">Caelum Pic</h1>
+<header class="jumbotron">
+    <h1 class="text-center">{{title}}</h1>
+</header>
 
-<!-- <foto></foto> -->
-
-<!-- <button class="btn btn-danger">TESTE</button> -->
+<main class="container">
+    <foto *ngFor="let foto of listaFotos" [url]="foto.url" [titulo]="foto.titulo"></foto>
+</main>

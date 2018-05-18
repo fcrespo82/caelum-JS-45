@@ -1,34 +1,55 @@
 import { Component, OnInit } from '@angular/core';
 import { FotoComponent } from '../foto/foto.component';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { FotoService } from '../servicos/foto.service';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
-  selector: 'app-cadastro',
-  templateUrl: './cadastro.component.html',
-  styles: []
+    selector: 'app-cadastro',
+    templateUrl: './cadastro.component.html',
+    styles: []
 })
 export class CadastroComponent implements OnInit {
-  foto = new FotoComponent()
-  constructor(private client: HttpClient) { }
+    foto = new FotoComponent()
+    constructor(private conexaoApi: FotoService, private rotaAtiva: ActivatedRoute, private roteador: Router) {
+    }
 
-  ngOnInit() {
-  }
+    ngOnInit() {
+        this.rotaAtiva.params.subscribe(parametros => {
+            console.log(parametros.fotoId)
+            if (parametros.fotoId) {
+                this.conexaoApi.consultar(parametros.fotoId).subscribe(
+                    fotoApi => this.foto = fotoApi
+                )
+            }
+        })
 
-  salvar() {
+    }
 
-    let cabecalho = new HttpHeaders()
+    salvar() {
+        if (this.foto._id) {
+            this.conexaoApi.alterar(this.foto).subscribe(
+                () => {
+                    console.log('Alterado');
+                    setTimeout(() => {
+                        this.roteador.navigate(['/'])
+                    }, 1000)
+                },
+                (erro) => {
+                    console.log(erro);
+                }
+            )
+        } else {
+            this.conexaoApi.cadastrar(this.foto).subscribe(
+                (resposta) => {
+                    console.log(resposta);
+                    this.foto = new FotoComponent()
+                },
+                (erro) => {
+                    console.log(erro);
+                }
+            )
+        }
 
-    cabecalho.append('Content-Type', 'application/json')
 
-    let endpoint = 'http://localhost:3000/v1/fotos'
-    this.client.post(endpoint, this.foto, {
-      headers: cabecalho
-    }).subscribe(
-      (resposta) => {
-        console.log(resposta);
-      },
-      (erro) => {
-        console.log(erro);
-      })
-  }
+    }
 }

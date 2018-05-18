@@ -1,9 +1,8 @@
-<div class="card">
-    <ng-content select="foto">
-    </ng-content>
+<div class="card" style="width: 12em;">
+    <ng-content select="[data-foto]"></ng-content>
     <div class="card-body">
         <h6 class="card-title">{{titulo}}</h6>
         <p class="card-text">{{descricao}}</p>
-        <a href="#" class="btn btn-danger">Remover</a>
+        <ng-content select="button"></ng-content>
     </div>
 </div>

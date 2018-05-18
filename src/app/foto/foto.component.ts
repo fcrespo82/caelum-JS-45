@@ -4,7 +4,6 @@ import { Component, Input } from "@angular/core";
 @Component({
     selector: 'foto',
     styles: [`.card-img-top {
-        width: 200px;
         height: 10rem;
         object-fit: cover;
     }`],
@@ -15,4 +14,5 @@ export class FotoComponent {
     @Input() titulo = ''
     @Input() url = ''
     descricao = ''
+    _id: string
 }

@@ -10,6 +10,7 @@ import { PainelModule } from './painel/painel.module';
 import { ListagemComponent } from './listagem/listagem.component';
 import { CadastroComponent } from './cadastro/cadastro.component';
 import { ModuloRoteador } from './app.route';
+import { FotoService } from './servicos/foto.service';
 
 
 @NgModule({
@@ -27,7 +28,7 @@ import { ModuloRoteador } from './app.route';
     ModuloRoteador,
     FormsModule
   ],
-  providers: [],
+  providers: [FotoService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

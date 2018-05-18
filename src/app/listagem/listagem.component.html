@@ -9,9 +9,12 @@
       <a routerLink="/cadastro" class="btn btn-primary">Nova foto</a>
     </form>
   </div>
-  <div class="row">
-    <painel *ngFor="let foto of listaFotos" [titulo]="foto.titulo">
-      <foto [url]="foto.url" [titulo]="foto.titulo"></foto>
+  <div class="row card-deck">
+    <painel *ngFor="let foto of listaFotos" [titulo]="foto.titulo" [descricao]="foto.descricao">
+      <a data-foto [routerLink]="['/alterar', foto._id]">
+        <foto [url]="foto.url" [titulo]="foto.titulo"></foto>
+      </a>
+      <button class="btn btn-danger" (click)="remover(foto)">Remover</button>
     </painel>
   </div>
 </main>

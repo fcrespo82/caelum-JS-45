@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { FotoComponent } from '../foto/foto.component';
 import { MensagemComponent } from '../mensagem/mensagem.component';
 import { FotoService } from '../servicos/foto.service';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 @Component({
     selector: 'app-cadastro',
@@ -12,14 +13,22 @@ import { FotoService } from '../servicos/foto.service';
 export class CadastroComponent implements OnInit {
     foto = new FotoComponent()
     mensagem = new MensagemComponent()
+    formCadastro: FormGroup
 
+    constructor(private conexaoApi: FotoService,
+        private rotaAtiva: ActivatedRoute,
+        private roteador: Router,
+        private formBuilder: FormBuilder) {
 
-    constructor(private conexaoApi: FotoService, private rotaAtiva: ActivatedRoute, private roteador: Router) {
+        this.formCadastro = formBuilder.group({
+            titulo: ['', Validators.compose([Validators.required, Validators.minLength(5)])],
+            url: ['', [Validators.required, Validators.pattern('^http.*|^data.*')]], // Formato novo? https://angular.io/api/forms/FormBuilder#control
+            descricao: ''
+        })
     }
 
     ngOnInit() {
         this.rotaAtiva.params.subscribe(parametros => {
-            console.log(parametros.fotoId)
             if (parametros.fotoId) {
                 this.conexaoApi.consultar(parametros.fotoId).subscribe(
                     fotoApi => this.foto = fotoApi

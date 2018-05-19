@@ -9,14 +9,14 @@
             <div class="form-group">
                 <label for="">Título</label>
                 <input required formControlName="titulo" name="titulo" type="text" class="form-control" [(ngModel)]="foto.titulo">
-                <app-mensagem *ngIf="formCadastro.controls.titulo.errors?.required && formCadastro.controls.titulo.touched" texto="Título obrigatório" tipo="danger"></app-mensagem>
-                <app-mensagem *ngIf="formCadastro.controls.titulo.errors?.minlength" texto="Texto deve conter no mínimo {{formCadastro.controls.titulo.errors?.minlength.requiredLength}} caracteres." tipo="danger"></app-mensagem>
+                <app-mensagem *ngIf="formCadastro.controls['titulo'].errors?.required && formCadastro.controls['titulo'].touched" texto="Título obrigatório" tipo="danger"></app-mensagem>
+                <app-mensagem *ngIf="formCadastro.controls['titulo'].errors?.minlength" texto="Texto deve conter no mínimo {{requiredLength}} caracteres." tipo="danger"></app-mensagem>
             </div>
             <div class="form-group">
                 <label for="">URL</label>
                 <input pattern required formControlName="url" name="url" type="text" class="form-control" [(ngModel)]="foto.url">
-                <app-mensagem *ngIf="formCadastro.controls.url.errors?.required && formCadastro.controls.url.touched" texto="URL obrigatório" tipo="danger"></app-mensagem>
-                <app-mensagem *ngIf="formCadastro.controls.url.errors?.pattern" texto="Pattern inválido" tipo="danger"></app-mensagem>
+                <app-mensagem *ngIf="formCadastro.controls['url'].errors?.required && formCadastro.controls['url'].touched" texto="URL obrigatório" tipo="danger"></app-mensagem>
+                <app-mensagem *ngIf="formCadastro.controls['url'].errors?.pattern" texto="Pattern inválido ({{patternURL}})" tipo="danger"></app-mensagem>
             </div>
             <div class="form-group">
                 <label for="">Descrição</label>

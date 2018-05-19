@@ -15,14 +15,16 @@ export class CadastroComponent implements OnInit {
     mensagem = new MensagemComponent()
     formCadastro: FormGroup
 
+    patternURL = '^http.*|^data.*'
+    requiredLength = 5
     constructor(private conexaoApi: FotoService,
         private rotaAtiva: ActivatedRoute,
         private roteador: Router,
         private formBuilder: FormBuilder) {
 
         this.formCadastro = formBuilder.group({
-            titulo: ['', Validators.compose([Validators.required, Validators.minLength(5)])],
-            url: ['', [Validators.required, Validators.pattern('^http.*|^data.*')]], // Formato novo? https://angular.io/api/forms/FormBuilder#control
+            titulo: ['', Validators.compose([Validators.required, Validators.minLength(this.requiredLength)])],
+            url: ['', [Validators.required, Validators.pattern(this.patternURL)]], // Formato novo? https://angular.io/api/forms/FormBuilder#control
             descricao: ''
         })
     }

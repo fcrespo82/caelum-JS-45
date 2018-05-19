@@ -3,14 +3,22 @@
 </header>
 
 <main class="container">
- <app-mensagem *ngIf="mensagem.texto" tipo='{{mensagem.tipo}}'>{{mensagem.texto}}</app-mensagem>
+  <app-mensagem *ngIf="mensagem.texto" tipo='{{mensagem.tipo}}'>{{mensagem.texto}}</app-mensagem>
+
   <div class="row">
-    <form action="" class="col-md-12">
-      <a routerLink="/cadastro" class="btn btn-primary">Nova foto</a>
-    </form>
+    <div class="col-md-12">
+      <form action="" class="input-group">
+        <span class="input-group-prepend">
+            <a routerLink="/cadastro" class="btn btn-primary">Nova foto</a>
+        </span>
+        <input #inputBusca type="search" class="form-control" (keyup)="true">
+      </form>
+    </div>
   </div>
+
+
   <div class="row card-deck">
-    <painel *ngFor="let foto of listaFotos" [titulo]="foto.titulo" [descricao]="foto.descricao">
+    <painel *ngFor="let foto of listaFotos | filtroPorTitulo:inputBusca.value" [titulo]="foto.titulo" [descricao]="foto.descricao">
       <a data-foto [routerLink]="['/alterar', foto._id]">
         <foto [url]="foto.url" [titulo]="foto.titulo"></foto>
       </a>

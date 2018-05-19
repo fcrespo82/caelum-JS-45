@@ -3,7 +3,7 @@
 </header>
 
 <main class="container">
-
+ <app-mensagem *ngIf="mensagem.texto" tipo='{{mensagem.tipo}}'>{{mensagem.texto}}</app-mensagem>
   <div class="row">
     <form action="" class="col-md-12">
       <a routerLink="/cadastro" class="btn btn-primary">Nova foto</a>

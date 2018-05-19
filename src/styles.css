@@ -5,3 +5,7 @@
 painel {
     margin-bottom: 2em;
 }
+
+[disabled] {
+    cursor: not-allowed;
+}

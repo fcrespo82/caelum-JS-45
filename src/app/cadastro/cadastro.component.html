@@ -3,28 +3,31 @@
 </header>
 
 <section class="container">
+    <app-mensagem *ngIf="mensagem.texto" tipo='{{mensagem.tipo}}'>{{mensagem.texto}}</app-mensagem>
     <div class="row">
-        <form action="" (ngSubmit)="salvar()" class="col-sm-6">
+        <form #formCadastro="ngForm" action="" (ngSubmit)="salvar()" class="col-sm-6">
             <div class="form-group">
                 <label for="">Título</label>
-                <input name="titulo" type="text" class="form-control" [(ngModel)]="foto.titulo">
+                <input required #inputTitulo="ngModel" name="titulo" type="text" class="form-control" [(ngModel)]="foto.titulo">
+                <app-mensagem *ngIf="inputTitulo.touched && inputTitulo.invalid" texto="Título obrigatório" tipo="danger"></app-mensagem>
             </div>
             <div class="form-group">
                 <label for="">URL</label>
-                <input name="url" type="text" class="form-control" [(ngModel)]="foto.url">
+                <input pattern="^http.*|^data.*" #inputURL="ngModel" required name="url" type="text" class="form-control" [(ngModel)]="foto.url">
+                <app-mensagem *ngIf="inputURL.touched && inputURL.invalid" texto="URL obrigatório" tipo="danger"></app-mensagem>
             </div>
             <div class="form-group">
                 <label for="">Descrição</label>
                 <textarea name="descricao" class="form-control" [(ngModel)]="foto.descricao"></textarea>
             </div>
             <a [routerLink]="['']" class="btn btn-secondary">Voltar</a>
-            <button class="btn btn-primary">Salvar</button>
+            <button class="btn btn-primary" [disabled]="formCadastro.invalid" >Salvar</button>
         </form>
         <aside class="col-sm-4">
             <!-- Preview do cadastro aqui -->
             <h2>Preview</h2>
             <div class="row">
-                <painel [titulo]="foto.titulo" [descricao]="foto.descricao">
+                <painel *ngIf="foto.url" [titulo]="foto.titulo" [descricao]="foto.descricao">
                     <foto data-foto [url]="foto.url" [titulo]="foto.titulo"></foto>
                 </painel>
             </div>

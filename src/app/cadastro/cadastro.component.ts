@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { FotoComponent } from '../foto/foto.component';
-import { FotoService } from '../servicos/foto.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { FotoComponent } from '../foto/foto.component';
+import { MensagemComponent } from '../mensagem/mensagem.component';
+import { FotoService } from '../servicos/foto.service';
 
 @Component({
     selector: 'app-cadastro',
@@ -10,6 +11,9 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 export class CadastroComponent implements OnInit {
     foto = new FotoComponent()
+    mensagem = new MensagemComponent()
+
+
     constructor(private conexaoApi: FotoService, private rotaAtiva: ActivatedRoute, private roteador: Router) {
     }
 
@@ -22,30 +26,34 @@ export class CadastroComponent implements OnInit {
                 )
             }
         })
-
     }
 
     salvar() {
         if (this.foto._id) {
             this.conexaoApi.alterar(this.foto).subscribe(
-                () => {
-                    console.log('Alterado');
+                mensagem => {
+                    this.mensagem = mensagem
                     setTimeout(() => {
                         this.roteador.navigate(['/'])
                     }, 1000)
                 },
-                (erro) => {
-                    console.log(erro);
+                erro => {
+                    this.mensagem.texto = `ERRO: ${erro}`
+                    this.mensagem.tipo = 'danger'
                 }
             )
         } else {
             this.conexaoApi.cadastrar(this.foto).subscribe(
-                (resposta) => {
-                    console.log(resposta);
+                mensagem => {
+                    this.mensagem = mensagem
                     this.foto = new FotoComponent()
+                    setTimeout(() => {
+                        this.mensagem.texto = ''
+                    }, 1000)
                 },
-                (erro) => {
-                    console.log(erro);
+                erro => {
+                    this.mensagem.texto = `ERRO: ${erro}`
+                    this.mensagem.tipo = 'danger'
                 }
             )
         }
